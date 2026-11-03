@@ -45,10 +45,16 @@
       heroVid.src = src;
       heroVid.addEventListener('playing', () => heroVid.classList.add('on'), { once: true });
       heroVid.play().catch(() => {});
+      // only decode the hero while it is on screen and the tab is visible
+      let heroOn = true;
+      if ('IntersectionObserver' in window) new IntersectionObserver(([en]) => {
+        heroOn = en.isIntersecting; heroOn && !d.hidden ? heroVid.play().catch(() => {}) : heroVid.pause();
+      }, { threshold: 0.05 }).observe(heroVid);
+      d.addEventListener('visibilitychange', () => { d.hidden || !heroOn ? heroVid.pause() : heroVid.play().catch(() => {}); });
     }
   }
   function parallax(y) {
-    if (!heroVid || reduce || y > innerHeight * 1.2) return;
+    if (!heroVid || reduce || innerWidth < 700 || y > innerHeight * 1.2) return;
     heroVid.style.transform = `translate3d(0,${y * 0.18}px,0) scale(${1.06 + y * 0.00012})`;
     const copy = d.querySelector('.hero .copy');
     if (copy) copy.style.opacity = Math.max(0, 1 - y / (innerHeight * 0.7));
@@ -87,8 +93,13 @@
     let x = -100, y = -100, cx = x, cy = y;
     addEventListener('mousemove', (e) => { x = e.clientX; y = e.clientY; c.style.opacity = 1; }, { passive: true });
     d.addEventListener('mouseleave', () => { c.style.opacity = 0; });
-    const loop = () => { cx += (x - cx) * 0.2; cy += (y - cy) * 0.2; c.style.transform = `translate3d(${cx}px,${cy}px,0)`; requestAnimationFrame(loop); };
-    loop();
+    let running = false;
+    const loop = () => {
+      cx += (x - cx) * 0.22; cy += (y - cy) * 0.22;
+      c.style.transform = `translate3d(${cx}px,${cy}px,0)`;
+      if (Math.abs(x - cx) + Math.abs(y - cy) > 0.3) requestAnimationFrame(loop); else running = false;
+    };
+    addEventListener('mousemove', () => { if (!running) { running = true; requestAnimationFrame(loop); } }, { passive: true });
     d.addEventListener('mouseover', (e) => {
       const el = e.target.closest('[data-cursor]');
       if (el) { label.textContent = el.dataset.cursor; c.classList.add('big'); } else c.classList.remove('big');
@@ -99,14 +110,16 @@
   const modal = d.querySelector('.modal');
   if (modal) {
     const mv = modal.querySelector('video'), mcap = modal.querySelector('.cap');
+    let opener = null;
     const open = (src, title, vertical) => {
+      opener = d.activeElement;
       mv.src = src; mv.classList.toggle('vert', !!vertical);
       mcap.textContent = title || '';
       modal.classList.add('open'); html.style.overflow = 'hidden';
       mv.play().catch(() => {});
       modal.querySelector('.x').focus({ preventScroll: true });
     };
-    const close = () => { modal.classList.remove('open'); html.style.overflow = ''; mv.pause(); setTimeout(() => { mv.removeAttribute('src'); mv.load(); }, 600); };
+    const close = () => { modal.classList.remove('open'); html.style.overflow = ''; mv.pause(); if (opener) opener.focus({ preventScroll: true }); setTimeout(() => { mv.removeAttribute('src'); mv.load(); }, 600); };
     d.addEventListener('click', (e) => {
       const b = e.target.closest('[data-film]');
       if (b) { e.preventDefault(); open(b.dataset.film, b.dataset.title, b.dataset.vertical === '1'); }
@@ -127,16 +140,16 @@
     });
   });
 
-  /* ---------- work filters ---------- */
+  /* ---------- work filters (grouped) ---------- */
   const filters = d.querySelector('.filters');
   if (filters) {
-    const tiles = [...d.querySelectorAll('.grid .tile')];
+    const groups = [...d.querySelectorAll('.group')];
     const apply = (f) => {
       filters.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', b.dataset.f === f));
-      tiles.forEach((t) => {
-        const show = f === 'all' || t.dataset.lane.split(' ').includes(f);
-        t.classList.toggle('hidden', !show);
-        if (show) { t.classList.remove('in'); requestAnimationFrame(() => t.classList.add('in')); }
+      groups.forEach((g) => {
+        const show = f === 'all' || g.dataset.group === f;
+        g.classList.toggle('hidden', !show);
+        if (show) g.querySelectorAll('.rv').forEach((t) => t.classList.add('in'));
       });
     };
     filters.addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) { apply(b.dataset.f); history.replaceState(null, '', b.dataset.f === 'all' ? location.pathname : '#' + b.dataset.f); } });
