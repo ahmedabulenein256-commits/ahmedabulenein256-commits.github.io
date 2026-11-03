@@ -23,7 +23,8 @@
 
   /* ---------- header: solid after scroll, hide on scroll down ---------- */
   const hdr = d.querySelector('.hdr');
-  let lastY = scrollY, ticking = false;
+  let lastY = scrollY, ticking = false, scrolling = false, scrollT = 0;
+  const mbar = d.querySelector('.mbar');
   const onScroll = () => {
     const y = scrollY;
     if (hdr && !html.classList.contains('menu-open')) {
@@ -32,7 +33,8 @@
       if (y < lastY - 2) hdr.classList.remove('hide');
     }
     lastY = y;
-    parallax(y);
+    if (mbar) mbar.classList.toggle('show', y > innerHeight * 0.7 && innerHeight + y < d.documentElement.scrollHeight - 260);
+    scrolling = true; clearTimeout(scrollT); scrollT = setTimeout(() => { scrolling = false; }, 160);
     ticking = false;
   };
   addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
@@ -40,7 +42,7 @@
   /* ---------- hero: pick resolution, parallax ---------- */
   const heroVid = d.querySelector('.hero video');
   if (heroVid) {
-    const src = innerWidth > 1100 ? heroVid.dataset.hd : heroVid.dataset.sd;
+    const src = innerWidth <= 700 ? heroVid.dataset.m : innerWidth > 1100 ? heroVid.dataset.hd : heroVid.dataset.sd;
     if (!reduce && src) {
       heroVid.src = src;
       heroVid.addEventListener('playing', () => heroVid.classList.add('on'), { once: true });
@@ -53,36 +55,54 @@
       d.addEventListener('visibilitychange', () => { d.hidden || !heroOn ? heroVid.pause() : heroVid.play().catch(() => {}); });
     }
   }
-  function parallax(y) {
-    if (!heroVid || reduce || innerWidth < 700 || y > innerHeight * 1.2) return;
-    heroVid.style.transform = `translate3d(0,${y * 0.18}px,0) scale(${1.06 + y * 0.00012})`;
-    const copy = d.querySelector('.hero .copy');
-    if (copy) copy.style.opacity = Math.max(0, 1 - y / (innerHeight * 0.7));
-  }
-
   /* ---------- reveals ---------- */
   const io = 'IntersectionObserver' in window ? new IntersectionObserver((es) => {
     es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 }) : null;
   d.querySelectorAll('.rv, .mask').forEach((el) => io ? io.observe(el) : el.classList.add('in'));
 
-  /* ---------- tile hover loops (lazy) ---------- */
-  d.querySelectorAll('.tile[data-loop]').forEach((t) => {
-    if (!fine || reduce) return;
-    let v = null;
-    t.addEventListener('mouseenter', () => {
-      if (!v) {
-        v = d.createElement('video');
-        Object.assign(v, { muted: true, loop: true, playsInline: true, preload: 'auto' });
-        v.setAttribute('muted', ''); v.setAttribute('aria-hidden', 'true');
-        v.src = t.dataset.loop;
-        if (t.querySelector('.media.vert')) v.className = 'fg';
-        t.querySelector('.media').appendChild(v);
-        v.addEventListener('playing', () => v.classList.add('on'));
-      }
-      v.play().catch(() => {});
-    });
-    t.addEventListener('mouseleave', () => { if (v) { v.pause(); } });
+  /* ---------- tile loops: hover intent on desktop, centred card on phones ---------- */
+  const makeLoop = (t) => {
+    let v = t._v;
+    if (!v) {
+      v = t._v = d.createElement('video');
+      Object.assign(v, { muted: true, loop: true, playsInline: true, preload: 'auto' });
+      v.setAttribute('muted', ''); v.setAttribute('playsinline', ''); v.setAttribute('aria-hidden', 'true');
+      v.src = t.dataset.loop;
+      if (t.querySelector('.media.vert')) v.className = 'fg';
+      t.querySelector('.media').appendChild(v);
+      v.addEventListener('playing', () => v.classList.add('on'));
+    }
+    return v;
+  };
+  if (!reduce) d.querySelectorAll('.tile[data-loop]').forEach((t) => {
+    if (fine) {
+      let timer = 0;
+      const start = () => { clearTimeout(timer); timer = setTimeout(() => { if (!scrolling && t.matches(':hover')) makeLoop(t).play().catch(() => {}); }, 220); };
+      t.addEventListener('mouseenter', start);
+      t.addEventListener('mousemove', () => { if (!t._v || t._v.paused) start(); }, { passive: true });
+      t.addEventListener('mouseleave', () => { clearTimeout(timer); if (t._v) t._v.pause(); });
+    }
+  });
+  // phones: play the loop of the card that is centred in a swipe rail, one at a time
+  if (!fine && !reduce && 'IntersectionObserver' in window) {
+    const rio = new IntersectionObserver((es) => es.forEach((en) => {
+      const t = en.target;
+      if (en.isIntersecting && en.intersectionRatio > 0.8) makeLoop(t).play().catch(() => {});
+      else if (t._v) t._v.pause();
+    }), { threshold: [0, 0.8] });
+    d.querySelectorAll('.rail .tile[data-loop]').forEach((t) => rio.observe(t));
+  }
+  // swipe hint + progress under each rail (phones)
+  d.querySelectorAll('.grid.rail').forEach((rail) => {
+    const n = rail.querySelectorAll('.tile').length; if (n < 2) return;
+    const h = d.createElement('div'); h.className = 'rail-hint';
+    h.innerHTML = `<span>${html.dir === 'rtl' ? 'اسحب' : 'Swipe'} · <b class="c">1</b>/${n}</span><i><b></b></i>`;
+    rail.after(h);
+    const bar = h.querySelector('i b'), c = h.querySelector('.c');
+    const upd = () => { const max = rail.scrollWidth - rail.clientWidth || 1; const p = Math.min(1, Math.abs(rail.scrollLeft) / max);
+      bar.style.width = (100 / n + p * (100 - 100 / n)) + '%'; c.textContent = Math.round(p * (n - 1)) + 1; };
+    rail.addEventListener('scroll', () => requestAnimationFrame(upd), { passive: true }); upd();
   });
 
   /* ---------- custom cursor ---------- */
