@@ -551,3 +551,14 @@ h2.wsplit.rv{opacity:1;transform:none}
 .pn.all{align-self:center}
 .pnav+.next{margin-top:clamp(40px,5vw,70px)}
 @media (max-width:700px){.pnav{grid-template-columns:1fr 1fr}.pn.all{display:none}}
+
+/* v1.6 — smooth scrolling (Lenis) + audit fixes */
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}
+.lenis.lenis-stopped{overflow:hidden}
+.case-hero .kicker{flex-wrap:wrap;row-gap:10px}
+.stills img{object-fit:cover}
+.grid.rail .tile{scroll-margin-inline:var(--gut)}
+.cta,.faq,.stills,.shots,.ftr{content-visibility:auto;contain-intrinsic-size:auto 700px}
+html.lenis{scroll-behavior:auto}
