@@ -13,9 +13,9 @@
     store.set('aa-seen', '1');
     const finish = () => { loader.classList.add('done'); setTimeout(ready, 250); };
     const t0 = performance.now();
-    const go = () => setTimeout(finish, Math.max(0, 1900 - (performance.now() - t0)));
+    const go = () => setTimeout(finish, Math.max(0, 1100 - (performance.now() - t0)));
     if (d.readyState === 'complete') go(); else addEventListener('load', go, { once: true });
-    setTimeout(finish, 3800); // never hold the page hostage
+    setTimeout(finish, 2600); // never hold the page hostage
   } else {
     if (loader) loader.remove();
     ready();
@@ -44,15 +44,17 @@
   if (heroVid) {
     const src = innerWidth <= 700 ? heroVid.dataset.m : innerWidth > 1100 ? heroVid.dataset.hd : heroVid.dataset.sd;
     if (!reduce && src) {
-      heroVid.src = src;
+      // start the background film after the page has loaded, so first paint and scrolling stay smooth
+      const startHero = () => { heroVid.src = src; heroVid.play().catch(() => {}); };
+      const later = () => ('requestIdleCallback' in window ? requestIdleCallback(startHero, { timeout: 1200 }) : setTimeout(startHero, 300));
+      if (d.readyState === 'complete') later(); else addEventListener('load', later, { once: true });
       heroVid.addEventListener('playing', () => heroVid.classList.add('on'), { once: true });
-      heroVid.play().catch(() => {});
       // only decode the hero while it is on screen and the tab is visible
       let heroOn = true;
       if ('IntersectionObserver' in window) new IntersectionObserver(([en]) => {
-        heroOn = en.isIntersecting; heroOn && !d.hidden ? heroVid.play().catch(() => {}) : heroVid.pause();
+        heroOn = en.isIntersecting; if (!heroVid.src) return; heroOn && !d.hidden ? heroVid.play().catch(() => {}) : heroVid.pause();
       }, { threshold: 0.05 }).observe(heroVid);
-      d.addEventListener('visibilitychange', () => { d.hidden || !heroOn ? heroVid.pause() : heroVid.play().catch(() => {}); });
+      d.addEventListener('visibilitychange', () => { if (!heroVid.src) return; d.hidden || !heroOn ? heroVid.pause() : heroVid.play().catch(() => {}); });
     }
   }
   /* ---------- word-by-word headings ---------- */
@@ -267,21 +269,13 @@
     });
   }
 
-  /* ---------- page transitions ---------- */
-  if (!reduce) {
-    d.addEventListener('click', (e) => {
-      const a = e.target.closest('a[href]');
-      if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
-      if (a.target === '_blank' || a.hasAttribute('download') || a.dataset.film) return;
-      const u = new URL(a.href, location.href);
-      if (u.origin !== location.origin || (u.pathname === location.pathname && u.hash)) return;
-      if (/^(mailto|tel|https?:\/\/wa\.me)/.test(a.getAttribute('href'))) return;
-      e.preventDefault();
-      html.classList.add('leaving');
-      setTimeout(() => { location.href = a.href; }, 420);
-    });
-    addEventListener('pageshow', (e) => { if (e.persisted) html.classList.remove('leaving', 'menu-open'); });
+  /* ---------- reading progress (project pages) ---------- */
+  const prog = d.querySelector('.progress i');
+  if (prog) {
+    const upd = () => { const h = d.documentElement.scrollHeight - innerHeight; prog.style.transform = `scaleX(${h > 0 ? Math.min(1, scrollY / h) : 0})`; };
+    addEventListener('scroll', () => requestAnimationFrame(upd), { passive: true }); upd();
   }
+  addEventListener('pageshow', (e) => { if (e.persisted) html.classList.remove('leaving', 'menu-open'); });
 
   /* ---------- year ---------- */
   d.querySelectorAll('[data-year]').forEach((el) => { el.textContent = new Date().getFullYear(); });
