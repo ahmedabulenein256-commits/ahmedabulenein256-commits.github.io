@@ -21,6 +21,15 @@
     ready();
   }
 
+  /* ---------- smooth scrolling on desktop (Lenis) ---------- */
+  let lenis = null;
+  if (fine && !reduce && globalThis.Lenis) {
+    lenis = new globalThis.Lenis({ lerp: 0.12, wheelMultiplier: 1, smoothWheel: true, anchors: true });
+    const raf = (t) => { lenis.raf(t); requestAnimationFrame(raf); };
+    requestAnimationFrame(raf);
+    window.__lenis = lenis;
+  }
+
   /* ---------- header: solid after scroll, hide on scroll down ---------- */
   const hdr = d.querySelector('.hdr');
   let lastY = scrollY, ticking = false, scrolling = false, scrollT = 0;
@@ -193,11 +202,11 @@
       opener = d.activeElement;
       mv.src = src; mv.classList.toggle('vert', !!vertical);
       mcap.textContent = title || '';
-      modal.classList.add('open'); html.style.overflow = 'hidden';
+      modal.classList.add('open'); html.style.overflow = 'hidden'; if (lenis) lenis.stop();
       mv.play().catch(() => {});
       modal.querySelector('.x').focus({ preventScroll: true });
     };
-    const close = () => { modal.classList.remove('open'); html.style.overflow = ''; mv.pause(); if (opener) opener.focus({ preventScroll: true }); setTimeout(() => { mv.removeAttribute('src'); mv.load(); }, 600); };
+    const close = () => { modal.classList.remove('open'); html.style.overflow = ''; if (lenis) lenis.start(); mv.pause(); if (opener) opener.focus({ preventScroll: true }); setTimeout(() => { mv.removeAttribute('src'); mv.load(); }, 600); };
     d.addEventListener('click', (e) => {
       const b = e.target.closest('[data-film]');
       if (b) { e.preventDefault(); open(b.dataset.film, b.dataset.title, b.dataset.vertical === '1'); }
@@ -242,6 +251,7 @@
     const o = html.classList.toggle('menu-open');
     mb.setAttribute('aria-expanded', o);
     if (o) hdr.classList.remove('hide');
+    if (lenis) o ? lenis.stop() : lenis.start();
   });
 
   /* ---------- brief form -> email / WhatsApp ---------- */
