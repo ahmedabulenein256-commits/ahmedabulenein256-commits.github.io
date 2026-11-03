@@ -55,6 +55,62 @@
       d.addEventListener('visibilitychange', () => { d.hidden || !heroOn ? heroVid.pause() : heroVid.play().catch(() => {}); });
     }
   }
+  /* ---------- word-by-word headings ---------- */
+  if (!reduce) d.querySelectorAll('h2.rv').forEach((h) => {
+    let i = 0;
+    const walk = (n) => [...n.childNodes].forEach((c) => {
+      if (c.nodeType === 3) {
+        const f = d.createDocumentFragment();
+        c.textContent.split(/(\s+)/).forEach((t) => {
+          if (!t) return;
+          if (/^\s+$/.test(t)) { f.appendChild(d.createTextNode(t)); return; }
+          const w = d.createElement('span'); w.className = 'w';
+          const inner = d.createElement('span'); inner.textContent = t; inner.style.transitionDelay = (i++ * 0.06) + 's';
+          w.appendChild(inner); f.appendChild(w);
+        });
+        c.replaceWith(f);
+      } else if (c.nodeType === 1 && c.tagName !== 'BR') walk(c);
+    });
+    walk(h); h.classList.add('wsplit');
+  });
+
+  /* ---------- count-up numbers ---------- */
+  const countUp = (el) => {
+    const end = +el.dataset.count, t0 = performance.now(), dur = 1400;
+    const step = (t) => { const k = Math.min(1, (t - t0) / dur); el.textContent = Math.round(end * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  };
+  if ('IntersectionObserver' in window) {
+    const cio = new IntersectionObserver((es) => es.forEach((en) => { if (en.isIntersecting) { if (!reduce) countUp(en.target); cio.unobserve(en.target); } }), { threshold: 0.6 });
+    d.querySelectorAll('[data-count]').forEach((el) => { if (!reduce) el.textContent = '0'; cio.observe(el); });
+  }
+
+  /* ---------- growing showreel ---------- */
+  const reel = d.querySelector('.reel-sec');
+  if (reel) {
+    const frame = reel.querySelector('.reel-frame'), rv = reel.querySelector('video');
+    const big = () => innerWidth > 700 && !reduce;
+    let inView = false;
+    const grow = () => {
+      if (!big() || !inView) return;
+      const r = reel.getBoundingClientRect(), span = r.height - innerHeight;
+      const p = Math.min(1, Math.max(0, -r.top / (span * 0.75)));
+      frame.style.transform = `scale(${0.6 + 0.4 * p})`;
+    };
+    addEventListener('scroll', () => requestAnimationFrame(grow), { passive: true });
+    addEventListener('resize', grow);
+    if ('IntersectionObserver' in window) new IntersectionObserver(([en]) => {
+      inView = en.isIntersecting;
+      if (inView) { if (!rv.src) rv.src = rv.dataset.src; if (!d.hidden) rv.play().catch(() => {}); grow(); } else rv.pause();
+    }, { rootMargin: '200px 0px' }).observe(reel);
+    reel.querySelector('[data-reel-sound]').addEventListener('click', () => {
+      if (!rv.src) rv.src = rv.dataset.src;
+      rv.currentTime = 0; rv.muted = false; rv.loop = false; rv.controls = true;
+      reel.classList.add('sound'); rv.play().catch(() => {});
+      if (big()) scrollTo({ top: reel.offsetTop + (reel.offsetHeight - innerHeight) * 0.8, behavior: 'smooth' });
+    });
+  }
+
   /* ---------- reveals ---------- */
   const io = 'IntersectionObserver' in window ? new IntersectionObserver((es) => {
     es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
@@ -156,6 +212,7 @@
     b.addEventListener('click', () => {
       d.querySelectorAll('.player video').forEach((o) => { if (o !== v) o.pause(); });
       if (!v.src) v.src = v.dataset.src;
+      const pv = p.querySelector('.pv'); if (pv) { pv.pause(); pv.remove(); }
       v.controls = true; b.classList.add('off'); v.play().catch(() => {});
     });
   });
