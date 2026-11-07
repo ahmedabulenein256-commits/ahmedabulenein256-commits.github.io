@@ -568,3 +568,25 @@ html.lenis{scroll-behavior:auto}
 .marquee .track{gap:34px;padding-left:34px;animation-duration:60s}
 .marquee span{font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:.32em;text-transform:uppercase;color:var(--mute)}
 .marquee i{font-size:9px;opacity:.8}
+
+/* v1.8 — "What I offer" list */
+.offer{padding-bottom:clamp(40px,5vw,70px)}
+.offer-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.offer-list a{display:grid;grid-template-columns:64px minmax(0,1.1fr) minmax(0,1.6fr) 28px;align-items:center;gap:24px;padding:26px 0;border-bottom:1px solid var(--line);transition:padding .5s var(--ease),background .5s}
+.offer-list .on{font-family:var(--serif);font-style:italic;color:var(--brass);font-size:20px}
+.offer-list b{font-family:var(--serif);font-weight:500;font-size:clamp(26px,2.6vw,40px);line-height:1.1;transition:color .4s}
+.offer-list .od{color:var(--mute);font-size:16px;max-width:52ch}
+.offer-list .oa{width:22px;height:22px;color:var(--mute);transition:transform .5s var(--ease),color .4s}
+.offer-list a:hover{padding-left:12px;background:linear-gradient(90deg,rgba(201,162,107,.05),transparent 60%)}
+.offer-list a:hover b{color:var(--brass-2)}
+.offer-list a:hover .oa{transform:translateX(6px);color:var(--brass)}
+[dir=rtl] .offer-list a:hover{padding-left:0;padding-right:12px;background:linear-gradient(270deg,rgba(201,162,107,.05),transparent 60%)}
+[dir=rtl] .offer-list .oa{transform:scaleX(-1)}
+[dir=rtl] .offer-list a:hover .oa{transform:scaleX(-1) translateX(6px)}
+[dir=rtl] .offer-list b{font-family:"Amiri",var(--serif);font-weight:700}
+@media (max-width:700px){
+  .offer-list a{grid-template-columns:40px 1fr 20px;gap:6px 12px;padding:20px 0}
+  .offer-list .od{grid-column:2/3;font-size:15px}
+  .offer-list .oa{grid-row:1;grid-column:3}
+  .offer-list b{font-size:24px}
+}
