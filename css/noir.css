@@ -1,0 +1,112 @@
+/* Cinematic Noir, shared look for the inner pages. Loaded after site.css and matches the landing page. */
+:root{--gut:48px;--ease:cubic-bezier(.22,1,.36,1);--line:rgba(237,232,224,.14)}
+em{font-style:normal}
+.phead h1 em,.case-hero h1 em{font-style:normal;color:var(--mute)}
+.group-head .n,.idx,.serif[style*="italic"]{font-style:normal!important}
+h1,h2,h3{text-wrap:balance}
+p{text-wrap:pretty}
+:focus-visible{outline:1px solid var(--brass);outline-offset:4px}
+
+/* header, same as the landing page */
+.hdr .wrap,.hdr.solid .wrap{max-width:none;height:80px}
+.hdr.solid{background:rgba(14,14,15,.92);border-bottom:0}
+.brand{gap:14px}
+.brand svg{width:32px;height:32px}
+.brand b{font-size:19px;line-height:28px;letter-spacing:.2em;font-weight:500;text-transform:uppercase}
+@media (min-width:961px){
+  .nav{gap:32px}
+  .nav a.n{font-size:12px;line-height:16px;letter-spacing:.16em;font-weight:500;color:var(--bone);opacity:.78;transition:opacity .3s var(--ease)}
+  .nav a.n:hover,.nav a.n[aria-current=page]{opacity:1}
+}
+@media (max-width:960px){
+  :root{--gut:24px}
+  .hdr .wrap,.hdr.solid .wrap{height:64px}
+  .brand b{font-size:15px}
+}
+
+/* footer, same as the landing page */
+.ftr2{position:relative;background:var(--noir);padding:40px var(--gut);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;color:var(--mute);font-size:14px;line-height:20px;box-shadow:0 -1px 0 var(--line)}
+.ftr2 p{margin:0}
+.ftr2 div{display:flex;gap:16px 32px;flex-wrap:wrap}
+.ftr2 a{transition:color .3s var(--ease)}
+.ftr2 a:hover{color:var(--bone)}
+@media (max-width:960px){.ftr2{padding-bottom:calc(96px + env(safe-area-inset-bottom))}}
+
+/* buttons and text links, same as the landing page */
+.link{font:500 12px/16px var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--bone);padding:12px 0 8px;background:linear-gradient(var(--brass),var(--brass)) left bottom/100% 1px no-repeat;transition:background-size .5s var(--ease);cursor:pointer}
+.link:hover{background-size:40% 1px}
+
+/* page head */
+.phead{padding:160px 0 64px}
+.phead p{margin-top:24px;max-width:680px;color:var(--mute)}
+@media (max-width:960px){.phead{padding:128px 0 48px}}
+
+/* ---------- work: justified gallery with filters ---------- */
+.worksec{padding-bottom:96px}
+.fl{display:flex;gap:8px 32px;flex-wrap:wrap;margin-bottom:48px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.fl button{position:relative;min-height:44px;padding:12px 0;font:500 12px/16px var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--mute);transition:color .3s var(--ease);cursor:pointer}
+.fl button::after{content:"";position:absolute;left:0;right:0;bottom:4px;height:1px;background:var(--brass);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
+.fl button:hover{color:var(--bone)}
+.fl button[aria-pressed=true]{color:var(--bone)}
+.fl button[aria-pressed=true]::after{transform:none}
+.fl sup{margin-left:8px;font-size:10px;color:var(--brass);font-variant-numeric:tabular-nums}
+.gal{display:flex;flex-wrap:wrap;gap:48px 16px;transition:opacity .3s var(--ease),transform .5s var(--ease)}
+.gal.sw{opacity:0;transform:translateY(16px)}
+.gal .tile{flex:var(--ar) 1 calc(var(--ar)*310px);max-width:calc(var(--ar)*480px);min-width:0;grid-column:auto}
+.gal .tile[hidden]{display:none}
+.gal .tile .media{aspect-ratio:var(--ar);background:#000}
+.gal .tile .media::after{display:none}
+.gal .tile .media img,.gal .tile .media video{object-position:var(--fp,50% 50%);transition:transform 1.2s var(--ease),opacity .6s var(--ease)}
+.gal .tile .cap{display:block;padding-top:16px;border:0}
+.gal .tile .cap h2{font-size:24px;line-height:32px;font-weight:500;transition:color .3s var(--ease)}
+.gal .tile:hover .cap h2{color:var(--brass)}
+.gal .tile .cap .sub{display:inline;margin:0 0 0 12px;font-family:var(--sans);font-size:14px;line-height:20px;font-weight:400;color:var(--mute);letter-spacing:0}
+.gal .tile[style*="0.5625"] .cap .sub{display:block;margin:0}
+.gal .tile .cap .t{display:block;margin-top:4px;font-size:12px;line-height:16px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);text-align:left;white-space:normal}
+.gal .tile .tag{left:12px;top:12px;font-size:10px;line-height:16px;letter-spacing:.16em;padding:4px 8px;background:rgba(14,14,15,.82);border:0;color:var(--brass)}
+.galnote{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+@media (max-width:700px){
+  .gal{gap:32px 12px}
+  .gal .tile{flex-basis:calc(var(--ar)*250px)}
+  .gal .tile .cap h2{font-size:20px;line-height:28px}
+}
+.cta h2{font-size:clamp(40px,6vw,96px);line-height:1}
+.cta .mail{border-bottom:0;background:linear-gradient(var(--brass),var(--brass)) left bottom/100% 1px no-repeat;transition:background-size .5s var(--ease),color .3s var(--ease)}
+.cta .mail:hover{background-size:40% 1px;color:var(--bone)}
+
+/* ---------- contact: the short brief ---------- */
+.brief-head{padding-bottom:48px}
+.briefsec{padding-bottom:96px}
+.briefsec .contact-grid{grid-template-columns:1.35fr 1fr;gap:96px;align-items:start}
+.qb{display:grid;gap:48px}
+.qb fieldset{border:0;padding:0;margin:0;min-width:0;display:grid;gap:24px}
+.qb legend{padding:0;margin-bottom:24px;font-family:var(--serif);font-size:30px;line-height:36px;font-weight:500;color:var(--bone)}
+.qb legend .num{display:inline-block;width:48px;font-family:var(--sans);font-size:12px;line-height:16px;letter-spacing:.16em;color:var(--brass);font-variant-numeric:tabular-nums;vertical-align:middle}
+.chips{display:flex;flex-wrap:wrap;gap:12px}
+.chips label{position:relative;cursor:pointer}
+.chips input{position:absolute;opacity:0;inset:0;width:100%;height:100%;cursor:pointer;margin:0}
+.chips span{display:block;padding:12px 16px;border:1px solid var(--line);font-size:14px;line-height:20px;color:var(--mute);transition:color .3s var(--ease),border-color .3s var(--ease),background-color .3s var(--ease)}
+.chips label:hover span{color:var(--bone);border-color:rgba(237,232,224,.32)}
+.chips input:checked+span{color:var(--bone);border-color:var(--brass);background:rgba(201,162,107,.08)}
+.chips input:focus-visible+span{outline:1px solid var(--brass);outline-offset:4px}
+.qb .row{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.qb .field label{font-size:12px;line-height:16px;letter-spacing:.16em}
+.qb .field input,.qb .field textarea{font-size:16px;line-height:24px;padding:12px 0}
+.qb .field textarea{min-height:72px}
+.qb .field input[aria-invalid=true]{border-color:#E08A6B}
+.qb .err{margin:0;font-size:14px;line-height:20px;color:#E8A58C}
+.qb .actions{display:flex;gap:32px;align-items:center;flex-wrap:wrap}
+.qb .status-line{margin:0;font-size:14px;line-height:20px;color:var(--mute);min-height:20px}
+.direct{border-top:1px solid var(--line)}
+.direct .label{margin-top:32px;font-size:12px;line-height:16px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+.direct .cline small{letter-spacing:.16em;font-size:12px}
+@media (max-width:960px){
+  .briefsec .contact-grid{grid-template-columns:1fr;gap:64px}
+  .qb .row{grid-template-columns:1fr}
+  .qb legend{font-size:24px;line-height:32px}
+  .qb legend .num{width:40px}
+}
+
+/* wide screens: content lines up with the header, as on the landing page */
+:root{--max:100%}
+.k,.n,.idx{font-style:normal!important}
