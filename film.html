@@ -270,7 +270,7 @@ if(!seen&&!matchMedia("(prefers-reduced-motion: reduce)").matches&&scrollY<40){d
   <section class="hero" id="hero" aria-label="Introduction">
     <div class="film" id="film" style="background-image:url(media/ds-hero-poster.webp)">
       <video id="heroV" muted loop playsinline preload="none" poster="media/ds-hero-poster.webp"
-        data-wide="https://d2ol7oe51mr4n9.cloudfront.net/user_3JTaaW7jfTYBRjQa09u3E9tjPff/489c88dd-eb39-4395-b381-55f7ae33e55c.mp4"
+        data-wide="https://d2ol7oe51mr4n9.cloudfront.net/user_3JTaaW7jfTYBRjQa09u3E9tjPff/71df1ce9-0f8e-41d1-98b4-dc5abcfbe875.mp4"
         data-tall="https://d2ol7oe51mr4n9.cloudfront.net/user_3JTaaW7jfTYBRjQa09u3E9tjPff/b6b4d83a-a313-4b73-9a71-516986084639.mp4"
         data-tall-poster="media/ds-hero-poster-m.webp" aria-label="Scenes from Dragon Song: a warrior, her dragon and a burning battlefield"></video>
       <a class="open" href="work/dragon-song.html" aria-label="Open Dragon Song" data-cur="Open"></a>
@@ -310,11 +310,11 @@ if(!seen&&!matchMedia("(prefers-reduced-motion: reduce)").matches&&scrollY<40){d
         <figcaption class="fadein"><span class="n num">01</span><b>Dragon Song</b><span class="d">A warrior and her dragon on one last march. Cinematic story short.</span></figcaption>
       </figure>
       <figure class="slot tall fadein" id="sA">
-        <a class="box" href="work/orvane.html" aria-label="Open ORVANE" data-cur="Open"><video muted loop playsinline preload="none" poster="media/orvane.webp" data-src="media/orvane-loop.mp4"></video></a>
+        <a class="box" href="work/orvane.html" aria-label="Open ORVANE" data-cur="Open"><video muted loop playsinline preload="none" poster="media/orvane-hq-poster.webp" data-src="https://d2ol7oe51mr4n9.cloudfront.net/user_3JTaaW7jfTYBRjQa09u3E9tjPff/d869a763-ad2c-4e4a-aac5-aef1d6785049.mp4"></video></a>
         <figcaption><span class="n num">02</span><b>ORVANE</b><span class="d">A champagne dial carved with the ripples of a dune. Luxury watch film.</span></figcaption>
       </figure>
       <figure class="slot tall fadein" id="sB">
-        <a class="box" href="work/verdelle.html" aria-label="Open VERDELLE" data-cur="Open"><video muted loop playsinline preload="none" poster="media/verdelle.webp" data-src="media/verdelle-loop.mp4"></video></a>
+        <a class="box" href="work/verdelle.html" aria-label="Open VERDELLE" data-cur="Open"><video muted loop playsinline preload="none" poster="media/verdelle-hq-poster.webp" data-src="https://d2ol7oe51mr4n9.cloudfront.net/user_3JTaaW7jfTYBRjQa09u3E9tjPff/3476e134-8ccd-40c5-a9eb-ddca4d96a05b.mp4"></video></a>
         <figcaption><span class="n num">03</span><b>VERDELLE</b><span class="d">A diamond necklace cut by moonlight. High jewellery film.</span></figcaption>
       </figure>
       <div class="endcard fadein" id="endcard">
@@ -592,11 +592,10 @@ if(html.classList.contains('intro')){
     il.style.display='none';try{sessionStorage.setItem('aa-intro','1')}catch(e){}if(holdVideo){holdVideo=false;setHero();}initLenis();};
   var at=function(ms,fn){timers.push(setTimeout(fn,ms));};
   var step2=function(){
-    if(holdVideo){holdVideo=false;setHero();}
     var a=il.getBoundingClientRect(),b=nm.getBoundingClientRect();
     if(b.width){var sc=b.width/a.width;
       il.style.transform='translate('+((b.left+b.width/2)-(a.left+a.width/2)).toFixed(1)+'px,'+((b.top+b.height/2)-(a.top+a.height/2)).toFixed(1)+'px) scale('+sc.toFixed(4)+')';}
-    html.classList.add('i2');at(1400,function(){html.classList.add('i3');});at(3300,finish);};
+    html.classList.add('i2');at(1400,function(){html.classList.add('i3');if(holdVideo){holdVideo=false;setHero();}});at(3300,finish);};
   var started=false,go=function(){if(started||done)return;started=true;
     requestAnimationFrame(function(){requestAnimationFrame(function(){html.classList.add('i1');
       at(1450,function(){if(fontOK)step2();else fontCbs.push(function(){if(!done)step2();});});});});};
