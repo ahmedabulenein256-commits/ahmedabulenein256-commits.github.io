@@ -302,6 +302,16 @@ html.menu .nav{transform:none;background:transparent}
   .pp{margin-left:-12px}
   footer a{display:inline-flex;align-items:center;min-height:44px}
   footer div{gap:0 32px}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:40px 12px;overflow:visible;scroll-snap-type:none;align-items:start;padding:0 var(--pad)}
+  .slot.wide,.endcard{grid-column:1/-1;width:auto}
+  .slot.tall{width:auto}
+  .slot.wide .box{aspect-ratio:16/9}
+  .slot.tall figcaption{grid-template-columns:1fr}
+  .slot.tall figcaption span.d{grid-column:1}
+  .slot figcaption b{font-size:20px;line-height:28px}
+  .endcard{padding:0}
+  .endcard b{font-size:36px;line-height:40px}
+  .endcard svg{margin-top:16px}
 }
 @media (prefers-reduced-motion:reduce){.mpanel,.mpanel a{transition:none}}
 .nav ul a.arl{font-family:"Plex Arabic",system-ui,sans-serif;font-size:15px;letter-spacing:0;text-transform:none}
