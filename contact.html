@@ -36,16 +36,16 @@
 <main id="main">
 <section class="phead brief-head"><div class="wrap">
 <h1>Start with<br>a short brief.</h1>
-<p>Three quick answers and your brief opens in WhatsApp, ready to send. I reply within 24 hours.</p>
+<p>Three quick answers and your brief opens in WhatsApp, ready to send. I reply within 24 hours with a fixed quote.</p>
 </div></section>
 <section class="briefsec"><div class="wrap contact-grid">
 <form id="qbrief" class="qb" novalidate>
 <fieldset><legend><span class="num">01</span>What do you need?</legend><div class="chips">
-<label><input type="radio" name="type" value="Motion graphics promo" data-k="motion" checked><span>Motion graphics promo</span></label>
-<label><input type="radio" name="type" value="AI product film" data-k="product"><span>AI product film</span></label>
-<label><input type="radio" name="type" value="Brand story film" data-k="story"><span>Brand story film</span></label>
+<label><input type="radio" name="type" value="Social ad (Spark)" data-k="spark"><span>Social ad</span></label>
+<label><input type="radio" name="type" value="Motion graphics promo (Feature)" data-k="feature" checked><span>Motion graphics promo</span></label>
+<label><input type="radio" name="type" value="Cinematic film (Signature)" data-k="signature"><span>Cinematic film</span></label>
 <label><input type="radio" name="type" value="Voice over" data-k="voice"><span>Voice over</span></label>
-<label><input type="radio" name="type" value="Website" data-k="web"><span>Website</span></label>
+<label><input type="radio" name="type" value="Website or system" data-k="web"><span>Website or system</span></label>
 <label><input type="radio" name="type" value="Not sure yet" data-k="other"><span>Not sure yet</span></label>
 </div></fieldset>
 <fieldset><legend><span class="num">02</span>When do you need it?</legend><div class="chips">
@@ -54,7 +54,7 @@
 <label><input type="radio" name="when" value="Flexible" checked><span>Flexible</span></label>
 </div></fieldset>
 <fieldset><legend><span class="num">03</span>Who is it for?</legend>
-<div class="row"><div class="field"><label for="q-name">Your name</label><input id="q-name" name="name" required autocomplete="name" aria-describedby="q-err"></div>
+<div class="row"><div class="field"><label for="q-name">Your name (required)</label><input id="q-name" name="name" required autocomplete="name" aria-describedby="q-err"></div>
 <div class="field"><label for="q-co">Company or brand</label><input id="q-co" name="company" autocomplete="organization"></div></div>
 <div class="field"><label for="q-msg">Anything else, in a line or two (optional)</label><textarea id="q-msg" name="message" rows="2" placeholder="What are you launching, and where will it run?"></textarea></div>
 <p class="err" id="q-err" role="alert" hidden>Please add your name so I know who is writing.</p>
@@ -73,7 +73,7 @@
 <script>
 (function(){var f=document.getElementById('qbrief');if(!f)return;var WA='201003108979',TO='ahmedabulenein256@gmail.com';
 var st=f.querySelector('.status-line'),err=document.getElementById('q-err'),nm=document.getElementById('q-name');
-try{var k=new URLSearchParams(location.search).get('type');if(k){var r=f.querySelector('input[data-k="'+k+'"]');if(r)r.checked=true}}catch(e){}
+try{var k=new URLSearchParams(location.search).get('type');var AL={motion:'feature',product:'signature',story:'signature'};if(k&&AL[k])k=AL[k];if(k){var r=f.querySelector('input[data-k="'+k+'"]');if(r)r.checked=true}}catch(e){}
 function val(n){var d=new FormData(f);return (d.get(n)||'').toString().trim()}
 function ok(){var good=!!val('name');err.hidden=good;nm.setAttribute('aria-invalid',!good);if(!good)nm.focus();return good}
 function text(){var l=['Hello Ahmed, here is my brief.','','Project: '+val('type'),'Timing: '+val('when'),'Name: '+val('name')];
@@ -81,7 +81,7 @@ function text(){var l=['Hello Ahmed, here is my brief.','','Project: '+val('type
 nm.addEventListener('input',function(){if(val('name')){err.hidden=true;nm.removeAttribute('aria-invalid')}});
 f.addEventListener('submit',function(e){e.preventDefault();if(!ok())return;
  window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(text()),'_blank','noopener');
- st.textContent='WhatsApp should open with your brief filled in. If it does not, message +20 100 310 8979.'});
+  var u='https://wa.me/'+WA+'?text='+encodeURIComponent(text());st.textContent='WhatsApp should open with your brief filled in. If it does not, ';var a=document.createElement('a');a.href=u;a.target='_blank';a.rel='noopener';a.className='fb';a.textContent='open WhatsApp here';st.appendChild(a);st.appendChild(document.createTextNode('.'));});
 document.getElementById('q-mail').addEventListener('click',function(){if(!ok())return;
  location.href='mailto:'+TO+'?subject='+encodeURIComponent('New project: '+(val('company')||val('name')))+'&body='+encodeURIComponent(text());
  st.textContent='Your email app should open with the brief filled in. If it does not, write to '+TO+'.'});
