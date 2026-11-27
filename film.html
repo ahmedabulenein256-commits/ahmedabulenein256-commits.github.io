@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Ahmed Abulenein | Motion and AI film director</title>
+<meta name="description" content="Motion graphics, AI films and voice over in Arabic and English, directed by Ahmed Abulenein.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/cormorant-garamond-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preconnect" href="https://d2ol7oe51mr4n9.cloudfront.net">
+<style>
+@font-face{font-family:Cormorant;font-weight:400;font-display:swap;src:url(fonts/cormorant-garamond-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:Cormorant;font-weight:500;font-display:swap;src:url(fonts/cormorant-garamond-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:Manrope;font-weight:400;font-display:swap;src:url(fonts/manrope-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:Manrope;font-weight:500;font-display:swap;src:url(fonts/manrope-latin-500-normal.woff2) format("woff2")}
+:root{--noir:#0E0E0F;--bone:#EDE8E0;--mute:#A8A29A;--brass:#C9A26B;--line:rgba(237,232,224,.14);--ease:cubic-bezier(.22,1,.36,1);--pad:48px;--serif:Cormorant,"Times New Roman",serif;--sans:Manrope,system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--noir);color:var(--bone);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+body{overflow-x:hidden;font-size:16px;line-height:1.6}
+a{color:inherit;text-decoration:none}
+ol,ul{list-style:none}
+:focus-visible{outline:1px solid var(--brass);outline-offset:4px}
+.label{font-size:12px;line-height:16px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);font-weight:500}
+.serif{font-family:var(--serif);font-weight:400;letter-spacing:-.01em;text-wrap:balance}
+.btn{display:inline-flex;align-items:center;gap:12px;padding:14px 22px;border:1px solid var(--brass);color:var(--bone);font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;transition:background-color .4s var(--ease),color .4s var(--ease),transform .5s var(--ease)}
+.btn:hover{background:var(--brass);color:var(--noir)}
+.btn:active{transform:scale(.98)}
+.link{font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;padding-bottom:6px;background:linear-gradient(var(--brass),var(--brass)) left bottom/100% 1px no-repeat;transition:background-size .5s var(--ease)}
+.link:hover{background-size:40% 1px}
+.skip{position:fixed;left:16px;top:-80px;z-index:100;background:var(--bone);color:var(--noir);padding:10px 14px;transition:transform .3s var(--ease)}
+.skip:focus{transform:translateY(96px)}
+
+/* nav */
+.nav{position:absolute;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:24px var(--pad);mix-blend-mode:normal}
+.nav .brand{font-family:var(--serif);font-size:22px;font-weight:500;letter-spacing:.01em}
+.nav ul{display:flex;gap:32px}
+.nav ul a{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:500;color:var(--bone);opacity:.78;transition:opacity .3s var(--ease)}
+.nav ul a:hover{opacity:1}
+
+/* ---------- hero + selected work: static layout (phones, no script) ---------- */
+.stage{position:relative}
+.hero{position:relative;height:100vh;height:100svh;overflow:hidden;isolation:auto}
+.film{position:absolute;inset:0;background:#000 center/cover no-repeat;overflow:hidden}
+.film video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.film .open{position:absolute;inset:0;display:none}
+.scrim{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(14,14,15,.5) 0,rgba(14,14,15,0) 22%,rgba(14,14,15,0) 52%,rgba(14,14,15,.82) 100%)}
+.giant{position:absolute;left:0;right:0;top:44%;transform:translateY(-50%);text-align:center;font-family:var(--serif);font-weight:500;font-size:17vw;line-height:.8;letter-spacing:.01em;color:var(--bone);mix-blend-mode:lighten;white-space:nowrap;pointer-events:none;user-select:none}
+.giant span{display:inline-block;will-change:transform}
+.copy{position:absolute;left:var(--pad);bottom:48px;max-width:560px}
+.copy h1{font-size:40px;line-height:1.08}
+.copy p{margin-top:16px;color:var(--bone);opacity:.82;max-width:440px}
+.copy .cta{margin-top:28px;display:flex;gap:28px;align-items:center;flex-wrap:wrap}
+.spec{position:absolute;right:var(--pad);bottom:48px;text-align:right}
+.spec b{display:block;margin-top:8px;font-family:var(--serif);font-weight:500;font-size:24px;line-height:1.1}
+.spec .d{display:block;margin-top:4px;color:var(--mute);font-size:14px}
+.spec .link{display:inline-block;margin-top:16px}
+
+.work{padding:96px var(--pad) 0}
+.rowhead{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:40px}
+.rowhead h2{font-size:48px;line-height:1}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.slot{position:relative}
+.slot.wide{grid-column:1/-1}
+.slot .box{position:relative;display:block;overflow:hidden;background:#000}
+.slot.wide .box{aspect-ratio:1720/720}
+.slot.tall .box{aspect-ratio:9/16}
+.slot video,.slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.2s var(--ease)}
+.slot .box:hover video,.slot .box:hover img{transform:scale(1.03)}
+.slot figcaption{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding-top:14px}
+.slot figcaption b{font-family:var(--serif);font-weight:500;font-size:24px;line-height:1.1}
+.slot figcaption span{color:var(--mute);font-size:13px;text-align:right}
+.slot.tall figcaption{flex-direction:column;gap:2px}
+.slot.tall figcaption span{text-align:left}
+
+/* ---------- pinned layout (desktop, script on) ---------- */
+html.pin .stagewrap{height:260vh}
+html.pin .stage{position:sticky;top:0;height:100vh;overflow:hidden}
+html.pin .hero{position:absolute;inset:0;height:auto;overflow:visible}
+html.pin .film{inset:auto;left:0;top:0;transform-origin:0 0;will-change:transform;z-index:1}
+html.pin .film video{will-change:transform}
+html.pin .scrim{z-index:2;will-change:opacity}
+html.pin .giant{z-index:3;will-change:opacity,transform}
+html.pin .copy,html.pin .spec{z-index:4;will-change:opacity,transform}
+html.pin .work{position:absolute;inset:0;padding:0 var(--pad);display:flex;flex-direction:column;justify-content:center;pointer-events:none}
+html.pin .rowhead{margin-bottom:32px;will-change:opacity,transform}
+html.pin .row{display:flex;gap:24px;align-items:flex-start}
+html.pin .slot.wide{flex:0 0 auto}
+html.pin .slot.tall{flex:0 0 auto;will-change:opacity,transform}
+html.pin .slot.wide .box{visibility:hidden}
+html.pin .slot figcaption{will-change:opacity}
+html.pin .work.live .slot.tall,html.pin .work.live .rowhead{pointer-events:auto}
+html.pin .film.live .open{display:block}
+
+/* ---------- sections ---------- */
+section.block{padding:144px var(--pad)}
+.inner{max-width:1180px;margin:0 auto}
+.statement p{font-size:clamp(30px,4.2vw,60px);line-height:1.1;max-width:1000px}
+html.js .statement .w{opacity:.26;transition:opacity .6s var(--ease)}
+html.js .statement .w.on{opacity:1}
+.two{display:grid;grid-template-columns:1fr 2fr;gap:64px}
+.two h2{font-size:48px;line-height:1}
+.two .sub{margin-top:16px;color:var(--mute);max-width:300px}
+.offer li a{display:grid;grid-template-columns:48px 1fr 1.3fr 24px;gap:24px;align-items:baseline;padding:26px 0;transition:transform .6s var(--ease)}
+.offer li+li a{box-shadow:0 -1px 0 var(--line)}
+.offer li a:hover{transform:translateX(12px)}
+.offer .n{color:var(--brass);font-size:12px;letter-spacing:.16em}
+.offer b{font-family:var(--serif);font-weight:500;font-size:32px;line-height:1.05}
+.offer .d{color:var(--mute)}
+.offer svg{width:18px;height:18px;opacity:.5;transition:opacity .3s var(--ease),transform .6s var(--ease)}
+.offer a:hover svg{opacity:1;transform:translateX(6px)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:64px;margin-top:72px}
+.steps .n{font-family:var(--serif);font-size:88px;line-height:.9;color:var(--brass);opacity:.85}
+.steps h3{margin-top:20px;font-family:var(--serif);font-weight:500;font-size:30px}
+.steps p{margin-top:10px;color:var(--mute);max-width:320px}
+.final{text-align:center}
+.final h2{font-size:clamp(44px,7vw,104px);line-height:.95}
+.final p{margin:24px auto 0;color:var(--mute);max-width:460px}
+.final .cta{margin-top:36px;display:flex;gap:28px;justify-content:center;align-items:center;flex-wrap:wrap}
+footer{padding:40px var(--pad);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;color:var(--mute);font-size:14px;box-shadow:0 -1px 0 var(--line)}
+footer div{display:flex;gap:28px;flex-wrap:wrap}
+footer a:hover{color:var(--bone)}
+
+@media (max-width:860px){
+  :root{--pad:20px}
+  .nav{padding:18px var(--pad)}
+  .nav ul{gap:18px}
+  .nav ul li.x{display:none}
+  .giant{top:30%;font-size:18.5vw}
+  .copy{right:var(--pad);bottom:28px}
+  .copy h1{font-size:30px}
+  .spec{display:none}
+  .work{padding-top:72px}
+  .rowhead h2,.two h2{font-size:36px}
+  section.block{padding:88px var(--pad)}
+  .two{grid-template-columns:1fr;gap:36px}
+  .offer li a{grid-template-columns:32px 1fr 18px;gap:6px 14px}
+  .offer .d{grid-column:2}
+  .offer svg{grid-column:3;grid-row:1}
+  .offer b{font-size:26px}
+  .steps{grid-template-columns:1fr;gap:44px;margin-top:48px}
+  .steps .n{font-size:64px}
+  .slot.tall figcaption{flex-direction:column;gap:2px}
+  .slot.tall figcaption span{text-align:left}
+}
+@media (prefers-reduced-motion:reduce){html.js .statement .w{opacity:1}.slot video,.slot img,.offer li a{transition:none}}
+</style>
+<script>document.documentElement.classList.add("js")</script>
+</head>
+<body>
+<a class="skip" href="#after">Skip to content</a>
+<header class="nav">
+  <a class="brand" href="film.html">Ahmed Abulenein</a>
+  <nav aria-label="Main"><ul>
+    <li><a href="work.html">Work</a></li>
+    <li class="x"><a href="services.html">Services</a></li>
+    <li class="x"><a href="studio.html">Studio</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul></nav>
+</header>
+
+<main>
+<div class="stagewrap" id="wrap">
+ <div class="stage" id="stage">
+  <section class="hero" id="hero" aria-label="Introduction">
+    <div class="film" id="film" style="background-image:url(media/ds-hero-poster.webp)">
+      <video id="heroV" muted loop playsinline preload="none" poster="media/ds-hero-poster.webp"
+        data-wide="https://d2ol7oe51mr4n9.cloudfront.net/user_3JTaaW7jfTYBRjQa09u3E9tjPff/4183dada-d03b-4424-9204-c743c64611a1.mp4"
+        data-tall="https://d2ol7oe51mr4n9.cloudfront.net/user_3JTaaW7jfTYBRjQa09u3E9tjPff/b6b4d83a-a313-4b73-9a71-516986084639.mp4"
+        data-tall-poster="media/ds-hero-poster-m.webp" aria-label="Scenes from Dragon Song: a warrior, her dragon and a burning battlefield"></video>
+      <a class="open" href="work/dragon-song.html" aria-label="Open Dragon Song"></a>
+    </div>
+    <div class="scrim" id="scrim"></div>
+    <div class="giant" id="giant" aria-hidden="true"><span id="giantIn">ABULENEIN</span></div>
+    <div class="copy" id="copy">
+      <h1 class="serif">Motion graphics and AI films, directed like cinema.</h1>
+      <p>For brands in the Gulf and beyond. One director from the first idea to the final cut, in Arabic and English.</p>
+      <div class="cta">
+        <a class="btn" href="https://wa.me/201003108979" target="_blank" rel="noopener">Start a project</a>
+        <a class="link" href="work.html">See all work</a>
+      </div>
+    </div>
+    <div class="spec" id="spec">
+      <span class="label">Now playing</span>
+      <b>Dragon Song: The Last March</b>
+      <span class="d">AI film, 1 min 28 s</span>
+      <a class="link" href="work/dragon-song.html">Watch the film</a>
+    </div>
+  </section>
+
+  <section class="work" id="work" aria-label="Selected work">
+    <div class="rowhead" id="rowhead">
+      <h2 class="serif">Selected work</h2>
+      <a class="link" href="work.html">All projects</a>
+    </div>
+    <div class="row" id="row">
+      <figure class="slot wide" id="sWide">
+        <a class="box" href="work/dragon-song.html" aria-label="Open Dragon Song"><video muted loop playsinline preload="none" poster="media/dragon-song.webp" data-src="media/dragon-song-loop.mp4"></video></a>
+        <figcaption id="cWide"><b>Dragon Song</b><span>Cinematic story short</span></figcaption>
+      </figure>
+      <figure class="slot tall" id="sA">
+        <a class="box" href="work/orvane.html" aria-label="Open ORVANE"><video muted loop playsinline preload="none" poster="media/orvane.webp" data-src="media/orvane-loop.mp4"></video></a>
+        <figcaption><b>ORVANE</b><span>Luxury watch film</span></figcaption>
+      </figure>
+      <figure class="slot tall" id="sB">
+        <a class="box" href="work/verdelle.html" aria-label="Open VERDELLE"><video muted loop playsinline preload="none" poster="media/verdelle.webp" data-src="media/verdelle-loop.mp4"></video></a>
+        <figcaption><b>VERDELLE</b><span>High jewellery film</span></figcaption>
+      </figure>
+    </div>
+  </section>
+ </div>
+</div>
+
+<section class="block statement" id="after"><div class="inner">
+  <p class="serif" id="say">Brands used to need a crew, a set and a month for a film like this. I deliver it in days, and I direct every step myself.</p>
+</div></section>
+
+<section class="block"><div class="inner two">
+  <div><h2 class="serif">What I offer</h2><p class="sub">Five services in one place. Pick one, or combine them.</p></div>
+  <ol class="offer">
+    <li><a href="work.html#motion"><span class="n">01</span><b>Motion graphics</b><span class="d">Launch videos, explainers and brand promos, in Arabic or English.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></a></li>
+    <li><a href="work.html#films"><span class="n">02</span><b>AI films</b><span class="d">Product ads, short films and social ads made with AI.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></a></li>
+    <li><a href="services.html"><span class="n">03</span><b>AI voice over</b><span class="d">Natural voices in Saudi, Emirati, Egyptian and Levantine Arabic, or English.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></a></li>
+    <li><a href="work/aurele.html"><span class="n">04</span><b>Websites</b><span class="d">Landing pages and brand sites built around your video.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></a></li>
+    <li><a href="work/ops-systems.html"><span class="n">05</span><b>Operational systems</b><span class="d">Dashboards and trackers that keep your team on time.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></a></li>
+  </ol>
+</div></section>
+
+<section class="block"><div class="inner">
+  <h2 class="serif" style="font-size:48px;line-height:1">How it works</h2>
+  <ol class="steps">
+    <li><p class="n" aria-hidden="true">1</p><h3>Brief</h3><p>We agree one clear goal on day one. Every shot has to serve it.</p></li>
+    <li><p class="n" aria-hidden="true">2</p><h3>Look</h3><p>You see still frames of the film first. Nothing moves until you approve them.</p></li>
+    <li><p class="n" aria-hidden="true">3</p><h3>Final cut</h3><p>Edit, music, sound and colour, delivered in every size you need.</p></li>
+  </ol>
+</div></section>
+
+<section class="block final"><div class="inner">
+  <h2 class="serif">Have a launch coming up?</h2>
+  <p>Tell me what you are launching and when. You get a plan and a delivery date back.</p>
+  <div class="cta">
+    <a class="btn" href="https://wa.me/201003108979" target="_blank" rel="noopener">Start a project</a>
+    <a class="link" href="mailto:ahmedabulenein256@gmail.com">Send an email</a>
+  </div>
+</div></section>
+</main>
+
+<footer>
+  <p>Ahmed Abulenein. Motion and AI film director.</p>
+  <div>
+    <a href="tel:+201003108979">Phone / WhatsApp +20 100 310 8979</a>
+    <a href="mailto:ahmedabulenein256@gmail.com">ahmedabulenein256@gmail.com</a>
+    <a href="index.html">Current site</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+var html=document.documentElement,$=function(i){return document.getElementById(i)};
+var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+var wide=matchMedia('(min-width:861px) and (min-aspect-ratio:1/1)');
+var cl=function(v){return v<0?0:v>1?1:v};
+var ss=function(a,b,v){var t=cl((v-a)/(b-a));return t*t*(3-2*t)};
+var eo=function(a,b,v){var t=cl((v-a)/(b-a));return 1-Math.pow(1-t,3)};
+
+/* hero film source by screen shape */
+var hv=$('heroV'),film=$('film');
+function setHero(){
+  var tall=innerWidth/innerHeight<0.8, src=tall?hv.dataset.tall:hv.dataset.wide;
+  if(hv.dataset.cur===src)return; hv.dataset.cur=src;
+  if(tall){hv.poster=hv.dataset.tallPoster;film.style.backgroundImage='url('+hv.dataset.tallPoster+')';}
+  hv.src=src; hv.play().catch(function(){});
+}
+setHero();
+
+/* lazy loops */
+var vio=new IntersectionObserver(function(es){es.forEach(function(e){var v=e.target;
+  if(e.isIntersecting){if(!v.src&&v.dataset.src)v.src=v.dataset.src;if(!html.classList.contains('pin'))v.play().catch(function(){});}
+  else v.pause();});},{rootMargin:'200px'});
+var loops=[].slice.call(document.querySelectorAll('.slot video'));
+loops.forEach(function(v){vio.observe(v)});
+
+/* statement, word by word */
+var say=$('say');
+say.innerHTML=say.textContent.trim().split(/\s+/).map(function(w){return '<span class="w">'+w+'</span>'}).join(' ');
+var words=[].slice.call(say.querySelectorAll('.w'));
+function sayTick(){var line=innerHeight*.74;for(var i=0;i<words.length;i++){var w=words[i];if(!w.classList.contains('on')&&w.getBoundingClientRect().top<line)w.classList.add('on');}}
+
+/* giant type fits the width */
+var giant=$('giant'),gin=$('giantIn');
+function fitGiant(){
+  var pad=parseFloat(getComputedStyle(html).getPropertyValue('--pad'))||48;
+  giant.style.fontSize='200px';
+  var w=gin.getBoundingClientRect().width||1;
+  giant.style.fontSize=(200*(innerWidth-pad*2)/w).toFixed(1)+'px';
+}
+
+/* pinned sequence */
+var wrap=$('wrap'),stage=$('stage'),copy=$('copy'),spec=$('spec'),scrim=$('scrim'),work=$('work'),
+    rowhead=$('rowhead'),sWide=$('sWide'),sA=$('sA'),sB=$('sB'),cWide=$('cWide'),row=$('row');
+var pinned=false,geo=null,pT=0,pC=0,mx=0,my=0,mxC=0,myC=0,raf=0,inView=true;
+
+function layout(){
+  var want=wide.matches&&!reduce;
+  if(want!==pinned){pinned=want;html.classList.toggle('pin',want);
+    if(!want){[film,giant,copy,spec,scrim,rowhead,sA,sB,cWide,hv,gin].forEach(function(e){e.style.transform='';e.style.opacity='';});film.style.width=film.style.height='';work.classList.remove('live');film.classList.remove('live');}}
+  setHero();fitGiant();
+  if(!pinned){geo=null;return;}
+  var vw=stage.clientWidth,vh=stage.clientHeight,pad=48,gap=24;
+  var AR=1720/720,H=Math.min((vw-pad*2-gap*2)/(AR+2*9/16),vh*0.56);
+  var wW=H*AR,tW=H*9/16;
+  sWide.style.width=wW+'px';sA.style.width=sB.style.width=tW+'px';
+  sWide.querySelector('.box').style.height=H+'px';
+  row.style.justifyContent='center';
+  var sr=stage.getBoundingClientRect(),r=sWide.querySelector('.box').getBoundingClientRect();
+  film.style.width=wW+'px';film.style.height=H+'px';
+  var s0=Math.max(vw/wW,vh/H);
+  geo={x1:r.left-sr.left,y1:r.top-sr.top,s0:s0,x0:(vw-wW*s0)/2,y0:(vh-H*s0)/2,vw:vw};
+  draw(true);
+}
+function target(){var r=wrap.getBoundingClientRect();pT=cl(-r.top/(wrap.offsetHeight-innerHeight));}
+function draw(snap){
+  if(!pinned||!geo)return;
+  var k=snap?1:.14;pC+=(pT-pC)*k;mxC+=(mx-mxC)*.08;myC+=(my-myC)*.08;
+  var p=pC,t=eo(.08,.62,p),s=geo.s0+(1-geo.s0)*t,x=geo.x0+(geo.x1-geo.x0)*t,y=geo.y0+(geo.y1-geo.y0)*t;
+  film.style.transform='translate3d('+x.toFixed(2)+'px,'+y.toFixed(2)+'px,0) scale('+s.toFixed(4)+')';
+  var par=1-t;
+  hv.style.transform='translate3d('+(-mxC*10*par).toFixed(2)+'px,'+(-myC*6*par).toFixed(2)+'px,0) scale('+(1+.035*par).toFixed(4)+')';
+  var g=1-ss(.06,.3,p);
+  giant.style.opacity=g.toFixed(3);
+  giant.style.transform='translate3d(0,calc(-50% - '+((1-g)*60).toFixed(1)+'px),0)';
+  gin.style.transform='translate3d('+(mxC*16).toFixed(2)+'px,'+(myC*9).toFixed(2)+'px,0)';
+  var c=1-ss(.03,.2,p);
+  copy.style.opacity=spec.style.opacity=c.toFixed(3);
+  copy.style.transform=spec.style.transform='translate3d(0,'+((1-c)*-24).toFixed(1)+'px,0)';
+  copy.style.pointerEvents=spec.style.pointerEvents=c<.3?'none':'';
+  scrim.style.opacity=(1-ss(.1,.4,p)).toFixed(3);
+  var a=eo(.42,.78,p),b=eo(.52,.88,p);
+  sA.style.opacity=ss(.42,.6,p).toFixed(3);sA.style.transform='translate3d('+((1-a)*geo.vw*.45).toFixed(1)+'px,0,0)';
+  sB.style.opacity=ss(.52,.7,p).toFixed(3);sB.style.transform='translate3d('+((1-b)*geo.vw*.45).toFixed(1)+'px,0,0)';
+  var h=ss(.6,.82,p);
+  rowhead.style.opacity=cWide.style.opacity=h.toFixed(3);
+  rowhead.style.transform='translate3d(0,'+((1-h)*20).toFixed(1)+'px,0)';
+  var live=p>.8;work.classList.toggle('live',live);film.classList.toggle('live',live);
+  var playLoops=p>.38;
+  [sA,sB].forEach(function(f){var v=f.querySelector('video');if(playLoops){if(!v.src)v.src=v.dataset.src;if(v.paused)v.play().catch(function(){});}else if(!v.paused)v.pause();});
+}
+function loop(){raf=0;draw();
+  if(pinned&&inView&&(Math.abs(pT-pC)>.0004||Math.abs(mx-mxC)>.002||Math.abs(my-myC)>.002))raf=requestAnimationFrame(loop);}
+function kick(){if(!raf)raf=requestAnimationFrame(loop);}
+var tick=false;
+function onScroll(){if(tick)return;tick=true;requestAnimationFrame(function(){tick=false;sayTick();if(pinned){target();kick();}});}
+addEventListener('scroll',onScroll,{passive:true});
+addEventListener('resize',function(){layout();onScroll();});
+stage.addEventListener('pointermove',function(e){if(e.pointerType!=='mouse'||!pinned)return;mx=e.clientX/innerWidth*2-1;my=e.clientY/innerHeight*2-1;kick();});
+new IntersectionObserver(function(es){inView=es[0].isIntersecting;if(inView){hv.play().catch(function(){});kick();}else hv.pause();}).observe(stage);
+(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(function(){layout();target();pC=pT;draw(true);});
+layout();target();pC=pT;draw(true);sayTick();
+})();
+</script>
+</body>
+</html>
