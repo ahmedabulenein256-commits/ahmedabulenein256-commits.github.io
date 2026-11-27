@@ -1,5 +1,6 @@
 /* Ahmed Abulenein — site behaviour (no dependencies) */
 (() => {
+  window.__aaReady = true;
   const d = document, html = d.documentElement, body = d.body;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
