@@ -214,10 +214,25 @@
     });
     modal.querySelector('.x').addEventListener('click', close);
     modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
-    addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('open')) close(); });
+    addEventListener('keydown', (e) => {
+      if (!modal.classList.contains('open')) return;
+      if (e.key === 'Escape') { close(); return; }
+      if (e.key === 'Tab') {
+        const f = [modal.querySelector('.x'), mv];
+        const i = f.indexOf(d.activeElement);
+        e.preventDefault();
+        f[e.shiftKey ? (i <= 0 ? f.length - 1 : i - 1) : (i === f.length - 1 || i < 0 ? 0 : i + 1)].focus({ preventScroll: true });
+      }
+    });
   }
 
   /* ---------- case-study players ---------- */
+  d.querySelectorAll('.player .pv').forEach((pv) => {
+    if (reduce) return; // the poster stays; nothing moves until the visitor presses play
+    const src = (innerWidth > 900 && pv.dataset.hq) || pv.dataset.sm;
+    if (!src) return;
+    pv.src = src; pv.play().catch(() => {});
+  });
   d.querySelectorAll('.player').forEach((p) => {
     const v = p.querySelector('video'), b = p.querySelector('.playbtn');
     if (!v || !b) return;
