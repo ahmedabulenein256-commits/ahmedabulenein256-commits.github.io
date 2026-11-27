@@ -110,3 +110,40 @@ p{text-wrap:pretty}
 /* wide screens: content lines up with the header, as on the landing page */
 :root{--max:100%}
 .k,.n,.idx{font-style:normal!important}
+
+/* ---------- one system with the landing page: buttons, labels, cursor ---------- */
+.btn{height:auto;min-height:44px;padding:12px 24px;gap:12px;font-size:12px;line-height:16px;letter-spacing:.16em}
+.btn .ico{display:none}
+.label,.eyebrow,.status,.tile .tag,.cline small,.mini small,.field label,.metas dt{font-size:12px;letter-spacing:.16em}
+.cursor{border-color:transparent}
+.cursor.big{width:88px;height:88px;margin:-44px 0 0 -44px;background:var(--bone)}
+.cursor span{font-size:12px;letter-spacing:.16em;font-weight:500}
+.link{padding-top:20px}
+.qb .status-line a.fb{color:var(--bone);background:linear-gradient(var(--brass),var(--brass)) left bottom/100% 1px no-repeat;padding-bottom:2px}
+@media (max-width:960px){
+  .ftr2 a{display:inline-flex;align-items:center;min-height:44px}
+  .ftr2 div{gap:0 32px}
+  .mbar .btn{font-size:12px;min-height:44px}
+}
+@media (max-width:359px){.brand b{display:none}}
+.direct .cline small{overflow-wrap:anywhere}
+
+/* ---------- services: packages and prices ---------- */
+.card .k{font-family:var(--sans);font-size:12px;line-height:16px;letter-spacing:.16em;text-transform:uppercase;font-weight:500}
+.card .for{margin:0;color:var(--mute);font-size:14px;line-height:20px}
+.card .for .label{display:block;margin-bottom:4px;color:var(--mute)}
+.card .price{align-items:flex-end}
+.card .price .amt{text-align:right}
+.card .price b{display:block;font-size:30px;line-height:36px}
+.card .price small{display:block;margin-top:4px;color:var(--mute);font-size:14px;line-height:20px;font-variant-numeric:tabular-nums}
+.card .btn{justify-content:center}
+.pnote{margin:32px 0 0;max-width:680px;color:var(--mute);font-size:14px;line-height:20px}
+.addons.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.addons a{color:var(--bone);background:linear-gradient(var(--brass),var(--brass)) left bottom/100% 1px no-repeat;padding-bottom:2px}
+.lane-head{margin:96px 0 32px}
+.steps.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:900px){.addons.two,.steps.three{grid-template-columns:1fr}}
+.brand{min-height:44px}
+.nav-foot a{display:inline-flex;align-items:center;justify-content:center;min-height:44px}
+.cta .mail{padding-top:10px}
+.addons a{display:inline-block;padding:10px 0 2px}
