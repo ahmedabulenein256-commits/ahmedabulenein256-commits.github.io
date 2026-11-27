@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 Disallow: /luxury.html
-Sitemap: https://ahmedabulenein256-commits.github.io/sitemap.xml
+Sitemap: https://abuleneinstudio.com/sitemap.xml
