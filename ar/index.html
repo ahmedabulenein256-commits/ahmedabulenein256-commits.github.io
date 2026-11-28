@@ -140,6 +140,8 @@ html.intro.i3 .nav .brand svg{opacity:1}
 .slot{position:relative;flex:0 0 auto;scroll-snap-align:center}
 .slot.wide{width:86vw}
 .slot.tall{width:62vw}
+.slot.land{width:86vw}
+.slot.land .box{aspect-ratio:16/9}
 .slot .box{position:relative;display:block;overflow:hidden;background:#000}
 .slot.wide .box{aspect-ratio:1720/720}
 .slot.tall .box{aspect-ratio:9/16}
@@ -173,7 +175,7 @@ html.pin .row{overflow:visible;scroll-snap-type:none;gap:0;align-items:center;pa
 html.pin .slot{margin-right:64px}
 html.pin .slot.wide .box{visibility:hidden}
 html.pin .endcard{width:320px;padding:0}
-html.pin .work.live .slot.tall,html.pin .work.live .rowhead,html.pin .work.live .endcard{pointer-events:auto}
+html.pin .work.live .slot.tall,html.pin .work.live .slot.land,html.pin .work.live .rowhead,html.pin .work.live .endcard{pointer-events:auto}
 html.pin .film.live .open{display:block}
 html.pin .fadein{will-change:opacity}
 
@@ -303,7 +305,7 @@ html.menu .nav{transform:none;background:transparent}
   footer a{display:inline-flex;align-items:center;min-height:44px}
   footer div{gap:0 32px}
   .row{display:grid;grid-template-columns:1fr 1fr;gap:40px 12px;overflow:visible;scroll-snap-type:none;align-items:start;padding:0 var(--pad)}
-  .slot.wide,.endcard{grid-column:1/-1;width:auto}
+  .slot.wide,.slot.land,.endcard{grid-column:1/-1;width:auto}
   .slot.tall{width:auto}
   .slot.wide .box{aspect-ratio:16/9}
   .slot.tall figcaption{grid-template-columns:1fr}
@@ -430,13 +432,17 @@ if(!seen&&!matchMedia("(prefers-reduced-motion: reduce)").matches&&scrollY<40){d
         <a class="box" href="../work/dragon-song.html" aria-label="Open Dragon Song"><video muted loop playsinline preload="none" poster="../media/dragon-song.webp" data-src="../media/dragon-song-loop.mp4"></video></a>
         <figcaption class="fadein"><span class="n num">01</span><b>Dragon Song</b><span class="d">محاربة وتنّينها في مسيرة أخيرة. فيلم قصير سينمائي.</span></figcaption>
       </figure>
+      <figure class="slot land fadein" id="sL">
+        <a class="box" href="../work/lumavera.html" aria-label="Open LUMAVERA" data-cur="Open"><video muted loop playsinline preload="none" poster="../media/lumavera.webp" data-src="../media/lumavera-loop.mp4" data-hq="https://d2ol7oe51mr4n9.cloudfront.net/user_3JTaaW7jfTYBRjQa09u3E9tjPff/2abbf5b0-5ee6-4175-9753-07910df8c0bf.mp4"></video></a>
+        <figcaption><span class="n num">02</span><b>LUMAVERA</b><span class="d">برج على الواجهة البحرية، من خطّ قلم إلى ليلته الأولى. فيلم إطلاق عقاري.</span></figcaption>
+      </figure>
       <figure class="slot tall fadein" id="sA">
         <a class="box" href="../work/orvane.html" aria-label="Open ORVANE" data-cur="Open"><video muted loop playsinline preload="none" poster="../media/orvane-hq-poster.webp" data-src="https://d2ol7oe51mr4n9.cloudfront.net/user_3JTaaW7jfTYBRjQa09u3E9tjPff/d869a763-ad2c-4e4a-aac5-aef1d6785049.mp4"></video></a>
-        <figcaption><span class="n num">02</span><b>ORVANE</b><span class="d">ميناء بلون الشمبانيا منحوت بتموّجات الكثبان. فيلم ساعة فاخرة.</span></figcaption>
+        <figcaption><span class="n num">03</span><b>ORVANE</b><span class="d">ميناء بلون الشمبانيا منحوت بتموّجات الكثبان. فيلم ساعة فاخرة.</span></figcaption>
       </figure>
       <figure class="slot tall fadein" id="sB">
         <a class="box" href="../work/verdelle.html" aria-label="Open VERDELLE" data-cur="Open"><video muted loop playsinline preload="none" poster="../media/verdelle-hq-poster.webp" data-src="https://d2ol7oe51mr4n9.cloudfront.net/user_3JTaaW7jfTYBRjQa09u3E9tjPff/3476e134-8ccd-40c5-a9eb-ddca4d96a05b.mp4"></video></a>
-        <figcaption><span class="n num">03</span><b>VERDELLE</b><span class="d">عقد ألماس يقطعه ضوء القمر. فيلم مجوهرات راقية.</span></figcaption>
+        <figcaption><span class="n num">04</span><b>VERDELLE</b><span class="d">عقد ألماس يقطعه ضوء القمر. فيلم مجوهرات راقية.</span></figcaption>
       </figure>
       <div class="endcard fadein" id="endcard">
         <a href="../work.html"><b>شاهد كل المشاريع</b><span>موشن جرافيك، أفلام بالذكاء الاصطناعي، موقع ونظام تشغيلي. أحد عشر مشروعاً.</span>
@@ -557,6 +563,7 @@ setInterval(function(){
 
 /* lazy loops */
 var loops=[].slice.call(document.querySelectorAll('.slot video'));
+loops.forEach(function(v){if(v.dataset.hq&&innerWidth>900)v.dataset.src=v.dataset.hq;});
 var vio=new IntersectionObserver(function(es){es.forEach(function(e){var v=e.target;
   if(e.isIntersecting){if(!v.src&&v.dataset.src)v.src=v.dataset.src;if(!html.classList.contains('pin'))v.play().catch(function(){});}
   else v.pause();});},{rootMargin:'200px'});
@@ -572,7 +579,7 @@ new IntersectionObserver(function(es,o){if(es[0].isIntersecting){$('fmark').clas
 
 /* ---------- pinned sequence ---------- */
 var wrap=$('wrap'),stage=$('stage'),copy=$('copy'),spec=$('spec'),scrim=$('scrim'),work=$('work'),lock=$('lock'),
-    rowhead=$('rowhead'),sWide=$('sWide'),sA=$('sA'),sB=$('sB'),row=$('row'),nav=$('nav');
+    rowhead=$('rowhead'),sWide=$('sWide'),sA=$('sA'),sB=$('sB'),sL=$('sL'),row=$('row'),nav=$('nav');
 var fades=[].slice.call(document.querySelectorAll('.fadein')),holdEl=$('hold'),grainEl=$('grain');
 var pinned=false,geo=null,qT=0,qC=0,mx=0,my=0,mxC=0,myC=0,raf=0,inView=true;
 
@@ -581,13 +588,14 @@ function layout(){
   if(want!==pinned){pinned=want;html.classList.toggle('pin',want);
     if(!want){[film,giant,copy,spec,scrim,rowhead,row,hv,gi,giV,lock,grainEl].concat(fades,L,LV).forEach(function(e){e.style.transform='';e.style.opacity='';});
       film.style.width=film.style.height='';wrap.style.height='';work.classList.remove('live');film.classList.remove('live');
-      [sWide,sA,sB].forEach(function(s){s.style.width='';s.querySelector('.box').style.height='';});}}
+      [sWide,sA,sB,sL].forEach(function(s){s.style.width='';s.querySelector('.box').style.height='';});}}
   setHero();fitGiant();
   if(!pinned){geo=null;return;}
   var vw=stage.clientWidth,vh=stage.clientHeight,AR=1720/720;
   var hW=Math.min(vh*.5,vw*.7/AR),wW=hW*AR,hT=Math.min(vh*.66,720),tW=hT*9/16;
   sWide.style.width=wW+'px';sWide.querySelector('.box').style.height=hW+'px';
   [sA,sB].forEach(function(s){s.style.width=tW+'px';s.querySelector('.box').style.height=hT+'px';});
+  var hL=Math.min(hT*.8,vw*.6*9/16);sL.style.width=(hL*16/9)+'px';sL.querySelector('.box').style.height=hL+'px';
   row.style.transform='none';
   var sr=stage.getBoundingClientRect(),r=sWide.querySelector('.box').getBoundingClientRect();
   var maxShift=Math.max(0,$('endcard').getBoundingClientRect().right-sr.left+48-vw);
@@ -628,7 +636,7 @@ function draw(snap){
   for(var j=0;j<fades.length;j++)fades[j].style.opacity=h.toFixed(3);
   var live=a>.92;work.classList.toggle('live',live);film.classList.toggle('live',live);
   var playLoops=a>.5;
-  [sA,sB].forEach(function(f){var v=f.querySelector('video');if(playLoops){if(!v.src)v.src=v.dataset.src;if(v.paused)v.play().catch(function(){});}else if(!v.paused)v.pause();});
+  [sL,sA,sB].forEach(function(f){var v=f.querySelector('video');if(playLoops){if(!v.src)v.src=v.dataset.src;if(v.paused)v.play().catch(function(){});}else if(!v.paused)v.pause();});
 }
 function loop(){raf=0;draw();
   if(pinned&&inView&&(Math.abs(qT-qC)>.3||Math.abs(mx-mxC)>.002||Math.abs(my-myC)>.002||nameMoving>.004))raf=requestAnimationFrame(loop);}
